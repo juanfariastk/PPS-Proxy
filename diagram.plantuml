@@ -1,0 +1,27 @@
+@startuml
+
+interface Internet {
+    + connectTo(String serverhost): void
+}
+
+class RealInternet implements Internet {
+    + connectTo(String serverhost): void
+}
+
+class ProxyInternet implements Internet {
+    - realInternet: RealInternet
+    - bannedSites: List<String>
+    + connectTo(String serverhost): void
+}
+
+class ClientInternet {
+    - internet: Internet
+    + main(String[] args): void
+}
+
+Internet <|.. RealInternet
+Internet <|.. ProxyInternet
+ProxyInternet --> RealInternet
+ClientInternet --> ProxyInternet
+
+@enduml
